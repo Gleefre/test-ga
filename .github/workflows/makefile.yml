@@ -34,7 +34,7 @@ jobs:
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
         sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
-      shell: bash
+      shell: msys2 {0}
 
     - name: Setup MSYS2; install sdl2
       if: matrix.os == 'windows-latest'
@@ -56,7 +56,7 @@ jobs:
       run: |
         rm -f ${{ runner.os }}-bin.zip
         zip ${{ runner.os }}-bin.zip bin/*
-      shell: bash
+      shell: msys2 {0}
 
     - name: (w|h)ell
       run: git status
