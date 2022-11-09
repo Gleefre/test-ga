@@ -11,7 +11,7 @@ jobs:
         lisp: [sbcl-bin]
         os:
           - windows-latest
-          - ubuntu-latest
+          #- ubuntu-latest
           #- macos-latest
 
     runs-on: ${{ matrix.os }}
@@ -92,7 +92,7 @@ jobs:
       
     - name: Build
       run: |
-        ros -e "(ql:quickload :deploy)" -e "(ql:quickload :asdf)" -l test-ga.asd -e "(asdf:load-system :test-ga :force t)" -e "(asdf:make :test-ga)"
+        ros -e "(ql:quickload :deploy)" -e "(ql:quickload :asdf)" -e "(ql:quickload :sb-cga)" -l test-ga.asd -e "(asdf:load-system :test-ga :force t)" -e "(asdf:make :test-ga)"
 
     - name: zip
       run: |
