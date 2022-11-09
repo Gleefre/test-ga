@@ -36,8 +36,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: release
-    - name: install SBCL
-      run: choco install sbcl
+    - name: install SBCL & pkgconfig
+      run: choco install sbcl pkgconfiglite
     - name: install quicklisp
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
@@ -75,14 +75,12 @@ jobs:
     - name: clean old zip
       run: rm -f ${{ runner.os }}-bin.zip
       shell: bash
-#     - name: create new zip (windows)
-#       run: Compress-Archive -Path .\bin -DestinationPath windows-bin.zip
-    - name: create zip
-      run: zip windows-bin.zip bin/*
-      shell: bash
+    - name: create new zip (windows)
+      run: Compress-Archive -Path bin -DestinationPath windows-bin
 
     - name: Git Commit and Push
       run: |
+          git status
           git add windows-bin.zip
           git config --global user.name 'Gleefre'
           git config --global user.email 'Gleefre@users.noreply.github.com'
