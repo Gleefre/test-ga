@@ -28,8 +28,11 @@ jobs:
     - name: make clean
       run: make clean
 
-    - name: git commit push
-      run: |
-        git add ${{ runner.os }}-bin.zip
-        git commit -m "Does it work?"
-        git push
+    - name: Git Commit and Push
+      uses: github-actions-x/commit@v2.9
+      with:
+        # Github Token with commit access
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: release
+        commit-message: hopefullyfine
+        files: ${{ runner.os }}-bin.zip
