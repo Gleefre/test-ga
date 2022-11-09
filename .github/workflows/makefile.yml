@@ -44,19 +44,20 @@ jobs:
       shell: bash
 
     - name: morehel
-      run: ls C:\\msys2\mingw64\bin
+      run: ls D:/a/_temp/msys64/mingw64/lib
+      shell: bash
 
     - name: WinBuild
       if: matrix.os == 'windows-latest'
       run: make
       env: 
-        LD_LIBRARY_PATH: C:\\msys2\mingw64\bin
+        LD_LIBRARY_PATH: D:\\a\_temp\msys64\mingw64\lib
 
     - name: WinBuild - path?
       if: matrix.os == 'windows-latest'
       run: make
       env: 
-        PATH: C:\\msys2\mingw64\bin
+        PATH: D:\\a\_temp\msys64\mingw64\lib
 
     - name: LinBuild
       if: matrix.os != 'windows-latest'
