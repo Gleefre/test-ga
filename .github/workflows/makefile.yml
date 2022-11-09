@@ -18,53 +18,23 @@ jobs:
       with:
         ref: release
 
+    - name: install-sdl2-linux
+      if: matrix.os == 'linux-latest'
+      run: sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
+
     - name: install sbcl linux
       if: matrix.os == 'linux-latest'
       uses: cheeze2000/setup-sbcl@v1
 
-    - name: install sdl windows prepare
-      if: matrix.os == 'windows-latest'
-      run: mkdir sdl2-bin
-      
-    - name: install SDL2 windows
-      if: matrix.os == 'windows-latest'
-      #run: pacman -S mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
-      
-      uses: albin-johansson/download-sdl2@v2
-      with:
-        sources_destination: .
-        binaries_destination: sdl2-bin
-    - name: install SDL2-IMAGE windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-image@v2
-      with:
-        sources_destination: .
-        binaries_destination: sdl2-bin
-    - name: install SDL-TTF windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-ttf@v1'
-      with:
-        sources_destination: .
-        binaries_destination: sdl2-bin
-    - name: install SDL2-MIXER windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-mixer@v1
-      with:
-        sources_destination: .
-        binaries_destination: sdl2-bin
-
-    - name: Setup MSYS2
+    - name: Setup MSYS2; install sdl2
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
-        install: mingw-w64-x86_64-gcc make diffutils git
+        install: mingw-w64-x86_64-gcc make diffutils git mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
+
     - name: install sbcl windows
       if: matrix.os == 'windows-latest'
       run: choco install sbcl
-
-    - name: install-sdl2-linux
-      if: matrix.os == 'linux-latest'
-      run: sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
 
     - name: Build
       run: make
@@ -73,7 +43,7 @@ jobs:
       run: |
         rm -f ${{ runner.os }}-bin.zip
         zip ${{ runner.os }}-bin.zip bin/*
-      
+
     - name: (w|h)ell
       run: git status
     - name: (w|h)ell - 2
