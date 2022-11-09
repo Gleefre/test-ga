@@ -25,9 +25,12 @@ jobs:
     - name: make clean
       run: make clean
 
-    - name: git add and commit
+    - name: git checkout release
+    - uses: actions/checkout@v3
+      with:
+        ref: release
+    - name: aaa
       run: |
-        git checkout release
         git add ${{ runner.os }}-bin.zip
         git commit -m "Does it work?"
         git push
