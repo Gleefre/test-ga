@@ -6,16 +6,66 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        lisp: [sbcl-bin]
+        os: [ windows-latest, ubuntu-latest, macos-latest]
 
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
     steps:
+    - name: windows specific settings
+      if: matrix.os == 'windows-latest'
+      run: |
+        git config --global core.autocrlf false
+        echo "::set-env name=ROSWELL_INSTALL_DIR::~/ros"
+        echo "::add-path::~/ros/bin"
+
+    - name: cache .roswell
+      id: cache-dot-roswell
+      uses: actions/cache@v1
+      with:
+        path: ~/.roswell
+        key: ${{ runner.os }}-dot-roswell-${{ matrix.lisp }}-${{ hashFiles('**/*.asd') }}
+        restore-keys: |
+          ${{ runner.os }}-dot-roswell-${{ matrix.lisp }}-
+          ${{ runner.os }}-dot-roswell-
+
+    - name: install roswell
+      shell: bash
+      env:
+       LISP: ${{ matrix.lisp }}
+      run: curl -L https://raw.githubusercontent.com/roswell/roswell/master/scripts/install-for-ci.sh | sh
+
+    - name: run lisp
+      continue-on-error: true
+      shell: bash
+      run: |
+        ros -e '(format t "~a:~a on ~a~%...~%~%" (lisp-implementation-type) (lisp-implementation-version) (machine-type))'
+        ros -e '(format t " fixnum bits:~a~%" (integer-length most-positive-fixnum))'
+        ros -e "(ql:quickload 'trivial-features)" -e '(format t "features = ~s~%" *features*)'
+
+    - name: update ql dist if we have one cached
+      shell: bash
+      run: ros -e "(ql:update-all-dists :prompt nil)"
+
     - uses: actions/checkout@v3
 
-    - name: setup-lisp
-      uses: cheeze2000/setup-sbcl@v1
     - name: install-sdl2
       run: |
-        sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0      
+        sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
+
     - name: Build
       run: make
+
+    - name: zip
+      run: |
+        zip ${{ runner.os }}-bin.zip bin/*
+  
+    - name: make clean
+      run: make clean
+
+    - name: git add and commit
+      run: |
+        git checkout release
+        git add ${{ runner.os }}-bin.zip
+        git commit -m "Does it work?"
