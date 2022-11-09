@@ -40,9 +40,15 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
-        install: mingw-w64-x86_64-gcc make diffutils git mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
+        install: mingw-w64-x86_64-gcc zip make diffutils git mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
 
     - name: Build
+      if: matrix.os == 'windows-latest'
+      run: make
+      shell: msys2 {0}
+
+    - name: Build
+      if: matrix.os != 'windows-latest'
       run: make
 
     - name: zip
