@@ -8,6 +8,6 @@ build:
 		--eval "(asdf:load-system :test-ga :force t)" \
 		--eval "(asdf:make :test-ga)" \
 		--eval "(quit)"
-
+	cp app.exe bin/
 clean:
 	rm -rf bin/
