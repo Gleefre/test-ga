@@ -52,25 +52,25 @@ jobs:
 
     - name: install SDL2 windows
       if: matrix.os == 'windows-latest'      
-      uses: albin-johansson/download-sdl2@v2
+      uses: albin-johansson/download-sdl2@d4e9339339b31b200ada5c7530d5eadad01576c2
       with:
         sources_destination: .
         binaries_destination: .
     - name: install SDL2-IMAGE windows
       if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-image@v2
+      uses: albin-johansson/download-sdl2-image@4351247ed4fa2a10344d76071bd2567e2ca56c98
       with:
         sources_destination: .
         binaries_destination: .
     - name: install SDL-TTF windows
       if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-ttf@v1'
+      uses: albin-johansson/download-sdl2-ttf@620593c424dbe412921ea1b4f2c6ccde77818516
       with:
         sources_destination: .
         binaries_destination: .
     - name: install SDL2-MIXER windows
       if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-mixer@v1
+      uses: albin-johansson/download-sdl2-mixer@de6b8f87787996cb284f0ec47b116dba39ccb4b9
       with:
         sources_destination: .
         binaries_destination: .
