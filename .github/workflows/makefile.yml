@@ -91,7 +91,8 @@ jobs:
           binaries_destination: sdl2-bin      
       
     - name: Build
-      run: make
+      run: |
+        ros -e "(ql:quickload :deploy)" -e "(ql:quickload :asdf)" -l test-ga.asd -e "(asdf:load-system :test-ga :force t)" -e "(asdf:make :test-ga)"
 
     - name: zip
       run: |
