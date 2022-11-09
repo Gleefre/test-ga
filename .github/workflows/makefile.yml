@@ -8,17 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    #env:
-    #  LISP: ${{ matrix.lisp }}
-
     steps:
-
+    - uses: actions/checkout@v3
     - name: install sbcl linux
       uses: cheeze2000/setup-sbcl@v1
 
     - name: install-sdl2-linux
       run: sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
-      
+
     - name: Build
       run: make
 
