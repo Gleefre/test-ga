@@ -10,8 +10,8 @@ jobs:
       matrix:
         lisp: [sbcl-bin]
         os:
-          #- windows-latest
-          - ubuntu-latest
+          - windows-latest
+          #- ubuntu-latest
           #- macos-latest
 
     runs-on: ${{ matrix.os }}
