@@ -23,7 +23,7 @@ jobs:
     - name: install quicklisp
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
-        C:\ProgramData\chocolatey\bin\sbcl.exe --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
+        C:/ProgramData/chocolatey/bin/sbcl.exe --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
       shell: msys2 {0}
 
     - name: download SDL2
@@ -55,7 +55,7 @@ jobs:
       shell: msys2 {0}
 
     - name: build
-      run: make
+      run: LISP=C:/ProgramData/chocolatey/bin/sbcl.exe make
       shell: msys2 {0}
 
     - name: clean old zip
