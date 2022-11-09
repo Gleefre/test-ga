@@ -30,11 +30,11 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: choco install sbcl
 
-    - name: Setup MSYS2; install sdl2
-      if: matrix.os == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        install: mingw-w64-x86_64-gcc make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
+    #- name: Setup MSYS2; install sdl2
+    #  if: matrix.os == 'windows-latest'
+    #  uses: msys2/setup-msys2@v2
+    #  with:
+    #    install: mingw-w64-x86_64-gcc make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
 
     - name: intall quicklisp
       if: matrix.os == 'windows-latest'
@@ -43,16 +43,40 @@ jobs:
         sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
       shell: bash
 
-    - name: morehel
-      run: ls D:/a/_temp/msys64/mingw64/lib
-      shell: bash
+    #- name: Windows - path?
+    #  if: matrix.os == 'windows-latest'
+    #  uses: myci-actions/export-env-var-powershell@1
+    #  with:
+    #    name: PATH
+    #    value: $env:PATH;D:\a\_temp\msys64\mingw64\lib
 
-    - name: Windows - path?
-      if: matrix.os == 'windows-latest'
-      uses: myci-actions/export-env-var-powershell@1
+    - name: install SDL2 windows
+      if: matrix.os == 'windows-latest'      
+      uses: albin-johansson/download-sdl2@v2
       with:
-        name: PATH
-        value: $env:PATH;D:\a\_temp\msys64\mingw64\lib
+        sources_destination: .
+        binaries_destination: .
+    - name: install SDL2-IMAGE windows
+      if: matrix.os == 'windows-latest'
+      uses: albin-johansson/download-sdl2-image@v2
+      with:
+        sources_destination: .
+        binaries_destination: .
+    - name: install SDL-TTF windows
+      if: matrix.os == 'windows-latest'
+      uses: albin-johansson/download-sdl2-ttf@v1'
+      with:
+        sources_destination: .
+        binaries_destination: .
+    - name: install SDL2-MIXER windows
+      if: matrix.os == 'windows-latest'
+      uses: albin-johansson/download-sdl2-mixer@v1
+      with:
+        sources_destination: .
+        binaries_destination: .
+
+    - name: hohoho
+      run: ls
 
     - name: Build
       run: make
