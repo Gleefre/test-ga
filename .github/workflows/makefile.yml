@@ -42,10 +42,10 @@ jobs:
     - name: install libffi
       shell: bash
       run: |
-        wget https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz
-        tar -xf libffi-3.4.4.tar.gz
+        wget https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz
+        tar -xf libffi-3.3.tar.gz
     - run: |
-        cd libffi-3.4.4/
+        cd libffi-3.3/
         sh ./configure --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32
         make
         make install
