@@ -15,7 +15,7 @@ jobs:
     - name: install msys2
       uses: msys2/setup-msys2@v2
       with:
-        install: mingw-w64-x86_64-libffi make
+        install: mingw-w64-x86_64-libffi make mingw-w64-x86_64-pkg-config
   
     - name: install sbcl
       run: choco install sbcl
