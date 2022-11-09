@@ -18,8 +18,9 @@ jobs:
         install: mingw-w64-x86_64-libffi
   
     - name: install sbcl
-      run: choco install sbcl
+      run: pacman -S sbcl
       shell: msys2 {0}
+
     - name: install quicklisp
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
