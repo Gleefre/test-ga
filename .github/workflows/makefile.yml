@@ -47,6 +47,7 @@ jobs:
     - run: |
         cd libffi-3.3/
         sh ./configure --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32
+        echo $SHELL
         make
         make install
 
