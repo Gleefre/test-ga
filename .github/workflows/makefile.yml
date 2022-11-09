@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: release-v64
+        ref: release-v65
 
     - name: install msys2
       uses: msys2/setup-msys2@v2
