@@ -36,8 +36,19 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: release
-    - name: install SBCL & pkgconfig * mingw
-      run: choco install sbcl pkgconfiglite mingw
+    - name: install SBCL & pkgconfig & mingw
+      run: choco install sbcl pkgconfiglite mingw wget
+
+    - name: install libffi
+      shell: bash
+      run: |
+        wget https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz
+        tar -xf libffi-3.4.4.tar.gz
+        cd libffi-3.4.4/
+        ./configure
+        make
+        sudo make install
+
     - name: install quicklisp
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
