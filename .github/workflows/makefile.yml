@@ -26,9 +26,9 @@ jobs:
       run: zip ${{ runner.os }}-bin.zip bin/*
       
     - name: (w|h)ell
-      run: |
-        git status
-        git add ${{ runner.os }}-bin.zip
+      run: git status
+    - name: (w|h)ell - 2
+      run: git add ${{ runner.os }}-bin.zip
   
     - name: Git Commit and Push
       uses: github-actions-x/commit@v2.9
