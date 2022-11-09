@@ -33,19 +33,21 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
-        install: mingw-w64-x86_64-gcc zip make diffutils git mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
-        path-type: inherit
+        install: mingw-w64-x86_64-gcc zip make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
+        #path-type: inherit
     - name: intall quicklisp
       if: matrix.os == 'windows-latest'
       run: |
         curl -O https://beta.quicklisp.org/quicklisp.lisp
         sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
-      shell: msys2 {0}
+      shell: bash
 
     - name: Build
       if: matrix.os == 'windows-latest'
       run: make
-      shell: msys2 {0}
+      shell: bash
+      env: 
+        PATH: C:\msys2\mingw64\bin:$PATH
 
     - name: Build
       if: matrix.os != 'windows-latest'
@@ -55,7 +57,7 @@ jobs:
       run: |
         rm -f ${{ runner.os }}-bin.zip
         zip ${{ runner.os }}-bin.zip bin/*
-      shell: msys2 {0}
+      shell: bash
 
     - name: (w|h)ell
       run: git status
