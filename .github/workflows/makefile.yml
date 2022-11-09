@@ -74,18 +74,29 @@ jobs:
       with:
         sources_destination: .
         binaries_destination: .
+  
+    - name: Setup MSYS2?..
+      if: matrix.os == 'windows-latest'
+      uses: msys2/setup-msys2@v2
+      with:
+        install: mingw-w64-x86_64-gcc make diffutils git
 
     - name: hohoho
       run: ls
 
     - name: Build
       run: make
+      shell: msys2 {0}
 
     - name: clean old zip
       run: rm -f ${{ runner.os }}-bin.zip
       shell: bash
-    - name: create new zip
+    - name: create new zip (linux)
+      if: matrix.os == 'ubuntu-latest'
       run: zip ${{ runner.os }}-bin.zip bin/*
+    - name: create new zip (windows)
+      if: matrix.os == 'windows-latest'
+      run: Compress-Archive -Path bin -DestinationPath ${{ runner.os }}-bin.zip
 
     - name: (w|h)ell
       run: git status
