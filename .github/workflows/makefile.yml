@@ -47,20 +47,14 @@ jobs:
       run: ls D:/a/_temp/msys64/mingw64/lib
       shell: bash
 
-    - name: WinBuild
+    - name: Windows - path?
       if: matrix.os == 'windows-latest'
-      run: make
-      env: 
-        LD_LIBRARY_PATH: D:\\a\_temp\msys64\mingw64\lib
+      uses: myci-actions/export-env-var-powershell@1
+      with:
+        name: PATH
+        value: $env:PATH;D:\a\_temp\msys64\mingw64\lib
 
-    - name: WinBuild - path?
-      if: matrix.os == 'windows-latest'
-      run: make
-      env: 
-        PATH: D:\\a\_temp\msys64\mingw64\lib
-
-    - name: LinBuild
-      if: matrix.os != 'windows-latest'
+    - name: Build
       run: make
 
     - name: clean old zip
