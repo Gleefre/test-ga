@@ -6,7 +6,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          #- ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
@@ -14,16 +19,31 @@ jobs:
         ref: release
 
     - name: install sbcl linux
+      if: matrix.os == 'linux-latest'
       uses: cheeze2000/setup-sbcl@v1
+      
+    - name: Setup MSYS2
+      if: matrix.os == 'windows-latest'
+      uses: msys2/setup-msys2@v2
+      with:
+        install: mingw-w64-x86_64-gcc make diffutils git
+    - name: install sbcl windows
+      if: matrix.os == 'windows-latest'
+      run: choco install --no-progress msys2 --params "/NoUpdate"
 
     - name: install-sdl2-linux
       run: sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
+    - name: install sdl2 windows
+      if: matrix.os == 'windows-latest'
+      run: packman -S mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
 
     - name: Build
       run: make
 
     - name: zip
-      run: zip ${{ runner.os }}-bin.zip bin/*
+      run: |
+        rm -f ${{ runner.os }}-bin.zip
+        zip ${{ runner.os }}-bin.zip bin/*
       
     - name: (w|h)ell
       run: git status
