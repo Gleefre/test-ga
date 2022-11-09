@@ -44,10 +44,11 @@ jobs:
       run: |
         wget https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz
         tar -xf libffi-3.4.4.tar.gz
+    - run: |
         cd libffi-3.4.4/
         sh ./configure --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32
         make
-        sudo make install
+        make install
 
     - name: install quicklisp
       run: |
