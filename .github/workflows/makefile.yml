@@ -29,12 +29,13 @@ jobs:
     - name: install sbcl windows
       if: matrix.os == 'windows-latest'
       run: choco install sbcl
+
     - name: Setup MSYS2; install sdl2
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
         install: mingw-w64-x86_64-gcc zip make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
-        #path-type: inherit
+
     - name: intall quicklisp
       if: matrix.os == 'windows-latest'
       run: |
@@ -46,7 +47,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: make
       env: 
-        PATH: C:\msys2\mingw64\bin:${{ env.PATH }}
+        LD_LIBRARY_PATH: C:\msys2\mingw64\bin
 
     - name: Build
       if: matrix.os != 'windows-latest'
