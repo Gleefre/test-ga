@@ -45,9 +45,8 @@ jobs:
     - name: Build
       if: matrix.os == 'windows-latest'
       run: make
-      shell: bash
       env: 
-        PATH: C:\msys2\mingw64\bin:$PATH
+        PATH: C:\msys2\mingw64\bin:${{ env.PATH }}
 
     - name: Build
       if: matrix.os != 'windows-latest'
