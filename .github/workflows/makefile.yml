@@ -10,6 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: release
+
     - name: install sbcl linux
       uses: cheeze2000/setup-sbcl@v1
 
@@ -25,11 +28,7 @@ jobs:
     - name: make clean
       run: make clean
 
-    - name: git checkout release
-      uses: actions/checkout@v3
-      with:
-        ref: release
-    - name: aaa
+    - name: git commit push
       run: |
         git add ${{ runner.os }}-bin.zip
         git commit -m "Does it work?"
