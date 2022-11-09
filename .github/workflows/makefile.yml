@@ -26,18 +26,21 @@ jobs:
       if: matrix.os == 'linux-latest'
       uses: cheeze2000/setup-sbcl@v1
 
+    - name: install sbcl windows
+      if: matrix.os == 'windows-latest'
+      run: choco install sbcl
+    - name: intall quicklisp
+      if: matrix.os == 'windows-latest'
+      run: |
+        curl -O https://beta.quicklisp.org/quicklisp.lisp
+        sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
+      shell: bash
+
     - name: Setup MSYS2; install sdl2
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
         install: mingw-w64-x86_64-gcc make diffutils git mingw64/mingw-w64-x86_64-SDL2 mingw64/mingw-w64-x86_64-SDL2_mixer mingw64/mingw-w64-x86_64-SDL2_image mingw64/mingw-w64-x86_64-SDL2_ttf
-
-    - name: install sbcl windows
-      if: matrix.os == 'windows-latest'
-      run: |
-        choco install sbcl
-        curl -O https://beta.quicklisp.org/quicklisp.lisp
-        sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
 
     - name: Build
       run: make
