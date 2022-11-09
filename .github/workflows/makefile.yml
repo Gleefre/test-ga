@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
       with:
         ref: release
 
@@ -29,12 +29,12 @@ jobs:
       run: git status
     - name: (w|h)ell - 2
       run: git add ${{ runner.os }}-bin.zip
-  
+    - name: (w|h)ell - 3
+      run: git status
+
     - name: Git Commit and Push
-      uses: github-actions-x/commit@v2.9
-      with:
-        # Github Token with commit access
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        push-branch: release
-        commit-message: hopefullyfine
-        files: ${{ runner.os }}-bin.zip
+      run: |
+          git config --global user.name 'Gleefre'
+          git config --global user.email 'Gleefre@users.noreply.github.com'
+          git commit -am "Does it workp"
+          git push
