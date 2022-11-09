@@ -10,8 +10,8 @@ jobs:
       matrix:
         lisp: [sbcl-bin]
         os:
-          - windows-latest
-          #- ubuntu-latest
+          #- windows-latest
+          - ubuntu-latest
           #- macos-latest
 
     runs-on: ${{ matrix.os }}
@@ -21,9 +21,6 @@ jobs:
 
     steps:
 
-    - uses: 40ants/setup-lisp@v2
-      with:
-          asdf-system: cl-info
     - uses: actions/checkout@v3
     - name: Grant All Perms to Make Cache Restoring Possible
       run: |
@@ -60,35 +57,6 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
-
-    - name: prepare-sdl2-install-windows
-      run: |
-        mkdir sdl2-bin
-        export LD_LIBRARY_PATH=sdl2-bin
-    - name: install-sdl2-windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2@v2
-      with:
-          sources_destination: .
-          binaries_destination: sdl2-bin
-    - name: install-sdl2-image-windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-image@v2
-      with:
-          sources_destination: .
-          binaries_destination: sdl2-bin
-    - name: install-sdl2-ttf-windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-ttf@v1
-      with:
-          sources_destination: .
-          binaries_destination: sdl2-bin
-    - name: install-sdl2-mixer-windows
-      if: matrix.os == 'windows-latest'
-      uses: albin-johansson/download-sdl2-mixer@v1
-      with:
-          sources_destination: .
-          binaries_destination: sdl2-bin      
       
     - name: Build
       run: |
