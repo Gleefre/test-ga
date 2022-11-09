@@ -34,7 +34,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
-        install: mingw-w64-x86_64-gcc zip make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
+        install: mingw-w64-x86_64-gcc make diffutils git mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_ttf mingw-w64-x86_64-SDL2_mixer
 
     - name: intall quicklisp
       if: matrix.os == 'windows-latest'
@@ -43,21 +43,30 @@ jobs:
         sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))"
       shell: bash
 
-    - name: Build
+    - name: morehel
+      run: ls C:\\msys2\mingw64\bin
+
+    - name: WinBuild
       if: matrix.os == 'windows-latest'
       run: make
       env: 
-        LD_LIBRARY_PATH: C:\msys2\mingw64\bin
+        LD_LIBRARY_PATH: C:\\msys2\mingw64\bin
 
-    - name: Build
+    - name: WinBuild - path?
+      if: matrix.os == 'windows-latest'
+      run: make
+      env: 
+        PATH: C:\\msys2\mingw64\bin
+
+    - name: LinBuild
       if: matrix.os != 'windows-latest'
       run: make
 
-    - name: zip
-      run: |
-        rm -f ${{ runner.os }}-bin.zip
-        zip ${{ runner.os }}-bin.zip bin/*
+    - name: clean old zip
+      run: rm -f ${{ runner.os }}-bin.zip
       shell: bash
+    - name: create new zip
+      run: zip ${{ runner.os }}-bin.zip bin/*
 
     - name: (w|h)ell
       run: git status
