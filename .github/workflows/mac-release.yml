@@ -9,7 +9,9 @@ jobs:
       run: |
         echo "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/"
         ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
-        ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" /System/Library/Frameworks/OpenGL.framework
+        ls -al /System/Library/Frameworks/
+        sudo ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" /System/Library/Frameworks/OpenGL.framework
+        ls -al /System/Library/Frameworks/
         ls -al
         ehco "$(pwd)/:$DYLD_LIBRARY_PATH"
     - name: setup OpenGL
