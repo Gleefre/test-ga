@@ -5,10 +5,13 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: install xcode...
-      run: echo "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework/Headers"
-    - name: linking opengl framework...
-      run: cp -r "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./
+    - name: linking OpenGL...
+      run: |
+        echo "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/"
+        echo $DYLD_LIBRARY_PATH
+        ls -al
+        ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
+        ls -al
     - name: setup OpenGL
       run: brew install freeglut glfw glew
     - name: install SDL2
@@ -27,7 +30,9 @@ jobs:
         git clone https://github.com/lispgames/sdl2kit
         git clone https://github.com/lispgames/cl-sdl2-mixer
     - name: build
-      run: make
+      run: |
+        export DYLD_LIBRARY_PATH="$WORK_DIR/:$DYLD_LIBRARY_PATH"
+        make
     - name: zip
       run: |
         mv bin macos-release
