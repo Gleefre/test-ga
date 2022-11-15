@@ -34,7 +34,7 @@ jobs:
     - name: zip
       run: |
         mv bin macos-release
-        zip macos-release macos-release/*
+        zip -r macos-release macos-release
     - name: upload release
       uses: actions/upload-artifact@v3
       with:
