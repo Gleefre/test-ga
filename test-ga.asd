@@ -3,6 +3,6 @@
   :components ((:file "app"))
 
   :defsystem-depends-on (:deploy)
-  :build-operation "program-op"
+  :build-operation "deploy-op"
   :build-pathname "app"
   :entry-point "app:start")
