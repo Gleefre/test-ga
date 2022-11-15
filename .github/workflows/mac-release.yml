@@ -8,7 +8,7 @@ jobs:
     - name: install xcode...
       run: echo "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework/Headers"
     - name: linking opengl framework...
-      run: ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" /System/Library/Frameworks/OpenGL.framework
+      run: cp -r "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" /System/Library/PrivateFrameworks/
     - name: setup OpenGL
       run: brew install freeglut glfw glew
     - name: install SDL2
