@@ -63,5 +63,5 @@ jobs:
     - name: upload release
       uses: actions/upload-artifact@v3
       with:
-        name: windows-release
+        name: windows-release-artifact
         path: windows-release.zip
