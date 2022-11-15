@@ -3,6 +3,6 @@
   :components ((:file "app"))
 
   :defsystem-depends-on (:deploy)
-  :build-operation "deploy-op"
+  :build-operation "OSX-APP-DEPLOY-OP"
   :build-pathname "app"
   :entry-point "app:start")
