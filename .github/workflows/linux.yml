@@ -17,7 +17,7 @@ jobs:
         sbcl --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(ql-util:without-prompting (ql:add-to-init-file))" --eval "(print ql:*quicklisp-home*)" --eval "(print (user-homedir-pathname))" --quit
     - name: install sketch & cl-sdl2 & sdl2.kit from source
       run: |
-        cd quicklisp/local-projects/ # FIXME
+        cd /home/runner/quicklisp/local-projects/ # FIXME
         git clone https://github.com/Gleefre/sketch # To have resizable windows; FIXME later
         git clone https://github.com/Gleefre/cl-sdl2 # FIXME: https://github.com/lispgames/cl-sdl2
         git clone https://github.com/lispgames/sdl2kit
