@@ -29,10 +29,8 @@ jobs:
         rm -f linux-bin.zip
         zip linux-bin.zip bin/*
         rm -rf bin
-    - name: git add, commit, push
-      run: |
-        git config --global user.name 'Gleefre'
-        git config --global user.email 'Gleefre@users.noreply.github.com'
-        git add linux-bin.zip
-        git commit -am "release-linux"
-        git push
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-release
+        path: linux-bin.zip
