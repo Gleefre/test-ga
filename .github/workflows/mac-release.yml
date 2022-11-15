@@ -10,7 +10,7 @@ jobs:
         brew install tree
         cd "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework"
         tree
-        ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
+        # ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
         echo "$(pwd)/:$DYLD_LIBRARY_PATH"
         errorplease
     - name: setup OpenGL
