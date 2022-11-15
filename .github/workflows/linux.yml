@@ -22,16 +22,12 @@ jobs:
         git clone https://github.com/lispgames/cl-sdl2-mixer
     - name: build
       run: make
-    - name: rename bin
+    - name: zip
       run: |
         mv bin linux-release
-    - name: artifact storage try 2
+        zip linux-release linux-release/*
+    - name: upload release
       uses: actions/upload-artifact@v3
       with:
         name: linux-release
-        path: linux-release
-    - name: artifact storage try 3
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-release-try3
-        path: linux-release/*
+        path: linux-release.zip
