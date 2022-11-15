@@ -5,6 +5,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
+    - name: install xcode...
+      run: xcode-select --install
     - name: linking opengl framework...
       run: ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework/Headers" /usr/local/include/OpenGL
     - name: setup OpenGL
