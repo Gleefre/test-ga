@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: linking OpenGL...
       run: |
-        tree "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework"
+        find "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework"
         ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
         echo "$(pwd)/:$DYLD_LIBRARY_PATH"
         errorplease
