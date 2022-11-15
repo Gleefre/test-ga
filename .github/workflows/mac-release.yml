@@ -8,10 +8,10 @@ jobs:
     - name: linking OpenGL...
       run: |
         echo "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/"
-        echo $DYLD_LIBRARY_PATH
-        ls -al
         ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" ./OpenGL.framework
+        ln -s "$(xcrun --sdk macosx --show-sdk-path)/System/Library/Frameworks/OpenGL.framework" /System/Library/Frameworks/OpenGL.framework
         ls -al
+        ehco "$(pwd)/:$DYLD_LIBRARY_PATH"
     - name: setup OpenGL
       run: brew install freeglut glfw glew
     - name: install SDL2
@@ -31,7 +31,7 @@ jobs:
         git clone https://github.com/lispgames/cl-sdl2-mixer
     - name: build
       run: |
-        export DYLD_LIBRARY_PATH="$WORK_DIR/:$DYLD_LIBRARY_PATH"
+        export DYLD_LIBRARY_PATH="$(pwd)/:$DYLD_LIBRARY_PATH"
         make
     - name: zip
       run: |
