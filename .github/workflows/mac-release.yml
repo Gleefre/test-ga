@@ -5,6 +5,8 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
+    - name: setup OpenGL
+      run: brew install glfw glew
     - name: install SDL2
       run: brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer
     - name: setup SBCL
