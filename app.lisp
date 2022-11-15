@@ -21,7 +21,3 @@
        (make-instance 'app :resizable t))))
   #-deploy
   (make-instance 'app :resizable t))
-
-(defun start ()
-  (make-instance 'app)
-  (sleep 5))
