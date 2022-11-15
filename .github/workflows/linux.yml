@@ -29,5 +29,5 @@ jobs:
     - name: upload release
       uses: actions/upload-artifact@v3
       with:
-        name: linux-release
+        name: linux-release-artifact
         path: linux-release.zip
