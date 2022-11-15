@@ -4,9 +4,7 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: release
+    - uses: actions/checkout@v3
     - name: install SDL2
       run: sudo apt-get install libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsdl2-mixer-2.0-0
     - name: setup SBCL
@@ -24,13 +22,16 @@ jobs:
         git clone https://github.com/lispgames/cl-sdl2-mixer
     - name: build
       run: make
-    - name: zip
+    - name: rename bin
       run: |
-        rm -f linux-bin.zip
-        zip linux-bin.zip bin/*
-        rm -rf bin
-    - name: Archive code coverage results
+        mv bin linux-release
+    - name: artifact storage try 2
       uses: actions/upload-artifact@v3
       with:
         name: linux-release
-        path: linux-bin.zip
+        path: linux-release
+    - name: artifact storage try 3
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-release
+        path: linux-release/*
