@@ -33,5 +33,5 @@ jobs:
     - name: artifact storage try 3
       uses: actions/upload-artifact@v3
       with:
-        name: linux-release
+        name: linux-release-try3
         path: linux-release/*
